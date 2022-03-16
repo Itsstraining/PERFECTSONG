@@ -18,7 +18,8 @@ export class MusicBarComponent implements OnInit {
   public isPlay= false; 
   public speak = 100;
   public songs:any = [];
-public isMute=false;
+  public isMute=false;
+  public isShuffle=false;
 
   ngOnInit(): void {
     this.audioSV._audioId.subscribe((_id: string) => {
@@ -31,6 +32,7 @@ public isMute=false;
     })
     this.audioSV.getPerfectSong('audio/getAll').subscribe((res:any)=>{
       this.songs = res
+      
     })
   }
   public getDetail(audioId: string) {
@@ -65,12 +67,15 @@ public isMute=false;
       this.Audio.src = path;
       this.Audio.load();
       this.Audio.play();
-
       this.isPlay = true;
+
+      
       this.Audio.addEventListener('timeupdate', (currentTime) => {
         //console.log(this.Audio.currentTime);
         this.durationTime();
+        
       })
+              
     // } else {
     //   this.isPlaying = false;
     //   this.Audio.pause();
@@ -123,6 +128,21 @@ public isMute=false;
       console.log("unmuted");
     }
   }
+
+//   public shuffleSong(){
+//     if(this.isShuffle==false){
+//       let items = this.songs[Math.floor(Math.random()*this.songs.length)]
+//       this.isShuffle=true;
+//       console.log(items);
+//     }else if ( this.isShuffle==true)
+//     {
+//       this.audioSV.getPerfectSong('audio/getAll').subscribe((res:any)=>{
+//         this.songs = res;
+//         console.log(res);
+//         this.isShuffle=false;
+//       })
+//   }
+// }
 
   @ViewChild('process') processRef!: ElementRef;
 
